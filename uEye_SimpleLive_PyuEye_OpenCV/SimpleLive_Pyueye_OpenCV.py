@@ -170,10 +170,15 @@ else:
 newFps = ueye.DOUBLE()
 error = ueye.is_SetFrameRate(hCam,2,newFps)
 print("fps", newFps)
-ex = ueye.DOUBLE(10)
+rangeMin = ueye.DOUBLE(165)
+er = ueye.is_Exposure(hCam,  ueye.IS_EXPOSURE_CMD_GET_EXPOSURE_RANGE_MIN, rangeMin, 8)
+rangeMax = ueye.DOUBLE(165)
+er = ueye.is_Exposure(hCam,  ueye.IS_EXPOSURE_CMD_GET_EXPOSURE_RANGE_MAX, rangeMax, 8)
+print("range", rangeMin, rangeMax)
+ex = ueye.DOUBLE(165)
 er = ueye.is_Exposure(hCam,  ueye.IS_EXPOSURE_CMD_SET_EXPOSURE, ex, 8)
 
-print("exp ", ex, er)
+print("экспозиция ", ex, er)
 
 # Continuous image display
 while(nRet == ueye.IS_SUCCESS):
