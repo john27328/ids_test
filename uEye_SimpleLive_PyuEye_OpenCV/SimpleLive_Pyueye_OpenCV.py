@@ -50,11 +50,10 @@ pcImageMemory = ueye.c_mem_p()
 MemID = ueye.int()
 rectAOI = ueye.IS_RECT()
 pitch = ueye.INT()
-nBitsPerPixel = ueye.INT(8)    #24: bits per pixel for color mode; take 8 bits per pixel for monochrome
+nBitsPerPixel = ueye.INT(12)    #24: bits per pixel for color mode; take 8 bits per pixel for monochrome
 channels = 1                    #3: channels for color mode(RGB); take 1 channel for monochrome
 m_nColorMode = ueye.INT()		# Y8/RGB16/RGB24/REG32
 bytes_per_pixel = int(nBitsPerPixel / 8)
-
 #---------------------------------------------------------------------------------------------------------------------------------------
 print("START")
 print()
@@ -166,13 +165,15 @@ if nRet != ueye.IS_SUCCESS:
 else:
     print("Press q to leave the programm")
 
-
-nCaps = 0;
-
-
-nRet = ueye.is_Exposure(hCam, ueye.IS_EXPOSURE_CMD_GET_CAPS, nCaps, sys.getsizeof(nCaps));
-
 #---------------------------------------------------------------------------------------------------------------------------------------
+#экспозиция
+newFps = ueye.DOUBLE()
+error = ueye.is_SetFrameRate(hCam,2,newFps)
+print("fps", newFps)
+ex = ueye.DOUBLE(10)
+er = ueye.is_Exposure(hCam,  ueye.IS_EXPOSURE_CMD_SET_EXPOSURE, ex, 8)
+
+print("exp ", ex, er)
 
 # Continuous image display
 while(nRet == ueye.IS_SUCCESS):
@@ -191,7 +192,7 @@ while(nRet == ueye.IS_SUCCESS):
     
 #---------------------------------------------------------------------------------------------------------------------------------------
     #Include image data processing here
-    
+
 #---------------------------------------------------------------------------------------------------------------------------------------
 
     #...and finally display it
