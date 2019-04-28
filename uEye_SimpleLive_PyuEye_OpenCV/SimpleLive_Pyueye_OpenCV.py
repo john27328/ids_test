@@ -194,7 +194,7 @@ while(nRet == ueye.IS_SUCCESS):
 
     # ...resize the image by a half
     frame = cv2.resize(frame,(0,0),fx=0.5, fy=0.5)
-    
+    print(type(frame));
 #---------------------------------------------------------------------------------------------------------------------------------------
     #Include image data processing here
 
