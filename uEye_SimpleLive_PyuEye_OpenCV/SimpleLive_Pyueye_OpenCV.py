@@ -50,7 +50,7 @@ pcImageMemory = ueye.c_mem_p()
 MemID = ueye.int()
 rectAOI = ueye.IS_RECT()
 pitch = ueye.INT()
-nBitsPerPixel = ueye.INT(12)    #24: bits per pixel for color mode; take 8 bits per pixel for monochrome
+nBitsPerPixel = ueye.INT(16)    #24: bits per pixel for color mode; take 8 bits per pixel for monochrome
 channels = 1                    #3: channels for color mode(RGB); take 1 channel for monochrome
 m_nColorMode = ueye.INT()		# Y8/RGB16/RGB24/REG32
 bytes_per_pixel = int(nBitsPerPixel / 8)
@@ -105,9 +105,9 @@ elif int.from_bytes(sInfo.nColorMode.value, byteorder='big') == ueye.IS_COLORMOD
 
 elif int.from_bytes(sInfo.nColorMode.value, byteorder='big') == ueye.IS_COLORMODE_MONOCHROME:
     # for color camera models use RGB32 mode
-    m_nColorMode = ueye.IS_CM_MONO8
-    nBitsPerPixel = ueye.INT(8)
-    bytes_per_pixel = int(nBitsPerPixel / 8)
+    m_nColorMode = ueye.IS_CM_MONO12
+    nBitsPerPixel = ueye.INT(16)
+    bytes_per_pixel = int(2)
     print("IS_COLORMODE_MONOCHROME: ", )
     print("\tm_nColorMode: \t\t", m_nColorMode)
     print("\tnBitsPerPixel: \t\t", nBitsPerPixel)
@@ -159,6 +159,7 @@ if nRet != ueye.IS_SUCCESS:
     print("is_CaptureVideo ERROR")
 
 # Enables the queue mode for existing image memory sequences
+print(hCam, pcImageMemory, MemID, width, height, nBitsPerPixel, pitch)
 nRet = ueye.is_InquireImageMem(hCam, pcImageMemory, MemID, width, height, nBitsPerPixel, pitch)
 if nRet != ueye.IS_SUCCESS:
     print("is_InquireImageMem ERROR")
@@ -185,16 +186,18 @@ while(nRet == ueye.IS_SUCCESS):
 
     # In order to display the image in an OpenCV window we need to...
     # ...extract the data of our image memory
+    print(pcImageMemory, width, height, nBitsPerPixel, pitch)
     array = ueye.get_data(pcImageMemory, width, height, nBitsPerPixel, pitch, copy=False)
+    print(type(array), array.size, array.itemsize, array.shape);
 
     # bytes_per_pixel = int(nBitsPerPixel / 8)
 
     # ...reshape it in an numpy array...
     frame = np.reshape(array,(height.value, width.value, bytes_per_pixel))
-
-    # ...resize the image by a half
+    print(type(frame), frame.size, frame.shape);
+#    # ...resize the image by a half
     frame = cv2.resize(frame,(0,0),fx=0.5, fy=0.5)
-    print(type(frame));
+    print(type(frame), frame.size, frame.shape);
 #---------------------------------------------------------------------------------------------------------------------------------------
     #Include image data processing here
 
@@ -206,6 +209,8 @@ while(nRet == ueye.IS_SUCCESS):
     # Press q if you want to end the loop
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
+    break
+    
 #---------------------------------------------------------------------------------------------------------------------------------------
 
 # Releases an image memory that was allocated using is_AllocImageMem() and removes it from the driver management
