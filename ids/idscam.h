@@ -10,6 +10,9 @@ public:
     ~IdsCam();
     int setFPS(double &fps);
     int getRangeFPS(double &minFPS, double &maxFPS);
+    int startLive();
+    int stopLive();
+    int getFrame(short **frame);
 
 
 private:
@@ -23,6 +26,7 @@ private:
     char* ppcImgMem; // кадр
     int memID;
     int pitch;
+    HANDLE hEvent;
 };
 
 #endif // IDSCAM_H
