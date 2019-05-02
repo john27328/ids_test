@@ -2,7 +2,7 @@
 #define WIDGET_H
 
 #include <QWidget>
-#include "ueye.h"
+#include "idscam.h"
 
 namespace Ui {
 class Widget;
@@ -18,6 +18,8 @@ public:
 
 private:
     Ui::Widget *ui;
+    IdsCam *cam;
+
 };
 
 #endif // WIDGET_H

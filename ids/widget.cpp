@@ -6,9 +6,11 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget)
 {
     ui->setupUi(this);
+    cam = new IdsCam;
 }
 
 Widget::~Widget()
 {
+    delete cam;
     delete ui;
 }

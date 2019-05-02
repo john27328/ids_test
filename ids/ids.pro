@@ -25,10 +25,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        idscam.cpp \
         main.cpp \
         widget.cpp
 
 HEADERS += \
+    idscam.h \
         widget.h \
     C:/Program Files/IDS/uEye/Develop/include/uEye.h \
     C:/Program Files/IDS/uEye/Develop/include/uEye.h

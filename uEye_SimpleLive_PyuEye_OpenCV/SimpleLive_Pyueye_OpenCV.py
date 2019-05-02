@@ -105,9 +105,9 @@ elif int.from_bytes(sInfo.nColorMode.value, byteorder='big') == ueye.IS_COLORMOD
 
 elif int.from_bytes(sInfo.nColorMode.value, byteorder='big') == ueye.IS_COLORMODE_MONOCHROME:
     # for color camera models use RGB32 mode
-    m_nColorMode = ueye.IS_CM_MONO12
-    nBitsPerPixel = ueye.INT(16)
-    bytes_per_pixel = int(2)
+    m_nColorMode = ueye.IS_CM_MONO8
+    nBitsPerPixel = ueye.INT(8)
+    bytes_per_pixel = int(1)
     print("IS_COLORMODE_MONOCHROME: ", )
     print("\tm_nColorMode: \t\t", m_nColorMode)
     print("\tnBitsPerPixel: \t\t", nBitsPerPixel)
@@ -182,6 +182,7 @@ er = ueye.is_Exposure(hCam,  ueye.IS_EXPOSURE_CMD_SET_EXPOSURE, ex, 8)
 print("экспозиция ", ex, er)
 
 # Continuous image display
+i = 0
 while(nRet == ueye.IS_SUCCESS):
 
     # In order to display the image in an OpenCV window we need to...
@@ -209,7 +210,8 @@ while(nRet == ueye.IS_SUCCESS):
     # Press q if you want to end the loop
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
-    break
+    i = i+1
+    print(i)
     
 #---------------------------------------------------------------------------------------------------------------------------------------
 
