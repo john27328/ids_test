@@ -8,6 +8,9 @@ class IdsCam
 public:
     IdsCam();
     ~IdsCam();
+    int setFPS(double &fps);
+    int getRangeFPS(double &minFPS, double &maxFPS);
+
 
 private:
     HIDS hCam = 0;      // 0 for the next available camera. 1-254 to access by ID
