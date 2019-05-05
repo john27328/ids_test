@@ -2,20 +2,28 @@
 #define IDSCAM_H
 
 #include "ueye.h"
-
+#include <QDebug>
+#define DBG(x) #x << (x)
 class IdsCam
 {
 public:
-    IdsCam();
+    static int initCum(IdsCam** cam);
     ~IdsCam();
     int setFPS(double &fps);
     int getRangeFPS(double &minFPS, double &maxFPS);
     int startLive();
     int stopLive();
-    int getFrame(short **frame);
+    int getFrame(float **frame);
+    bool statusCam(); // - 1 - ok
+    bool statusLife(); // - 1 - ok
 
+    int getWidth() const;
+
+    int getHeight() const;
 
 private:
+    IdsCam();
+    IdsCam **thisCam;
     HIDS hCam = 0;      // 0 for the next available camera. 1-254 to access by ID
     SENSORINFO sInfo;
     CAMINFO cInfo;
@@ -27,6 +35,8 @@ private:
     int memID;
     int pitch;
     HANDLE hEvent;
+    bool isOK;
+    bool isLife;
 };
 
 #endif // IDSCAM_H

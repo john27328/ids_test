@@ -6,7 +6,7 @@
 
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 TARGET = ids
 TEMPLATE = app
@@ -26,11 +26,15 @@ CONFIG += c++11
 
 SOURCES += \
         idscam.cpp \
+        life.cpp \
         main.cpp \
+        qcustomplot.cpp \
         widget.cpp
 
 HEADERS += \
     idscam.h \
+    life.h \
+    qcustomplot.h \
         widget.h \
     C:/Program Files/IDS/uEye/Develop/include/uEye.h \
     C:/Program Files/IDS/uEye/Develop/include/uEye.h

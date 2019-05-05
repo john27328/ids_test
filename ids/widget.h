@@ -2,7 +2,8 @@
 #define WIDGET_H
 
 #include <QWidget>
-#include "idscam.h"
+#include "life.h"
+#include "qcustomplot.h"
 
 namespace Ui {
 class Widget;
@@ -18,7 +19,14 @@ public:
 
 private:
     Ui::Widget *ui;
-    IdsCam *cam;
+    Life *life;
+    QCPColorMap *colorMap;
+    void RescaleCustomPlot(QCustomPlot *plt);
+
+public slots:
+    void createColorMap();
+    void plotColorMap(float **frame);
+
 
 };
 

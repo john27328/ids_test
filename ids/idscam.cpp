@@ -1,25 +1,37 @@
 #include "idscam.h"
-#include <QDebug>
-#define DBG(x) #x << (x)
+
 #include <QString>
 
 IdsCam::IdsCam()
 {
     int nRet;
-
+    isOK = 0;
     nRet = is_InitCamera(&hCam, 0); // подключение камеры hCam = 0 - первая доступная камера
     if (nRet == IS_SUCCESS) {
+        isOK = 1;
         qDebug()<<"Камера подключена. ID = " << hCam;
     }
     else {
         qDebug()<<"ошибка инициализации";
     }
 
-    nRet = is_GetCameraInfo(hCam,&cInfo); // информация о камере
-    nRet = is_GetSensorInfo(hCam, &sInfo);
+    nRet = is_GetSensorInfo(hCam, &sInfo); // информация о матрице
+    if(nRet != IS_SUCCESS) {
+        qDebug() << "информация о матрице не прочитана";
+    }
+    else {
+        qDebug() << "Модель сенсора: " << sInfo.strSensorName;
+    }
 
-    qDebug() << "Модель сенсора: " << sInfo.strSensorName;
-    qDebug() << "Серийный номер: " << cInfo.SerNo;
+    nRet = is_GetCameraInfo(hCam,&cInfo); // информация о камере
+    if(nRet != IS_SUCCESS) {
+        qDebug() << "информация о камере не прочитана";
+    }
+    else {
+        qDebug() << "Серийный номер: " << cInfo.SerNo;
+    }
+
+
 
     nRet = is_ResetToDefault(hCam); // сброс настроек на стандартные
     if(nRet != IS_SUCCESS) {
@@ -60,24 +72,57 @@ IdsCam::IdsCam()
         qDebug() << "ошибка выделения памяти";
     }
 
-    int live = startLive();
-    for (int k = 0; k < 1000; k++) {
-        short **frame = new short*[width];
-        for (int i = 0; i < width; ++i) {
-            frame[i] = new short[height];
-        }
-        live = getFrame(frame);
-        if (live == 0) break;
-    }
+    double fps = 2;
+    setFPS(fps);
 
+}
+
+int IdsCam::getHeight() const
+{
+    return height;
+}
+
+int IdsCam::getWidth() const
+{
+    return width;
+}
+
+
+int IdsCam::initCum(IdsCam **cam)
+{
+    qDebug() << DBG(*cam);
+    if(!(*cam)){
+        qDebug() << "init cam";
+        *cam = new IdsCam;
+        (*cam)->thisCam = cam;
+        if((*cam)->statusCam()){
+            return 1;
+        }
+        else {
+            delete *cam;
+            *cam = 0;
+            return 0;
+        }
+    }
+    else {
+        qDebug() << "delete cam";
+        delete (*cam);
+        *cam = 0;
+        return 0;
+    }
 }
 
 IdsCam::~IdsCam()
 {
-    stopLive();
-    is_FreeImageMem(hCam, ppcImgMem, memID);
-    is_ExitCamera(hCam);
-    qDebug() << "камера отключена";
+    qDebug() << DBG(*thisCam);
+    if((*thisCam)){
+        *thisCam = 0;
+        stopLive();
+        isOK = 0;
+        is_FreeImageMem(hCam, ppcImgMem, memID);
+        is_ExitCamera(hCam);
+        qDebug() << "камера отключена";
+    }
 }
 
 int IdsCam::setFPS(double &fps)
@@ -113,6 +158,7 @@ int IdsCam::startLive()
         return 0;
     }
     else {
+        isLife = 1;
         hEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
         is_InitEvent(hCam, hEvent, IS_SET_EVENT_FRAME);
         is_EnableEvent(hCam, IS_SET_EVENT_FRAME);
@@ -130,44 +176,55 @@ int IdsCam::stopLive()
         qDebug() << "ошибка остановки захата";
         return 0;
     }
-    else {
-        is_DisableEvent(hCam, IS_SET_EVENT_FRAME);
-        is_ExitEvent(hCam, IS_SET_EVENT_FRAME);
-        CloseHandle(hEvent);
-        return 1;
-    }
+    is_DisableEvent(hCam, IS_SET_EVENT_FRAME);
+    is_ExitEvent(hCam, IS_SET_EVENT_FRAME);
+    CloseHandle(hEvent);
+    isLife = 0;
+    return 1;
+
 }
 
-int IdsCam::getFrame(short **frame)
+int IdsCam::getFrame(float **frame)
 {
     // захват с ожиданием
     DWORD dwRet = WaitForSingleObject(hEvent, 1000);
     if (dwRet == WAIT_TIMEOUT) {
         /* wait timed out */
         qDebug() <<"время ожидание истекло";
+        stopLive();
         return 0;
     }
     else if (dwRet == WAIT_OBJECT_0) {
         /* event signaled */
         short *array = (short *)ppcImgMem;
 
-        //отладка
-        for (int i = 0; i < width; i+=100){
-            QString str;
-            for (int j = 0; j < height; j+=100) {
-                short tmp = (array[i + j * width]);
-                str+= QString::number(tmp) + " ";
-            }
-            qDebug() << str;
-        }
-        qDebug() << "========================";
+//        //отладка
+//        for (int i = 0; i < width; i+=100){
+//            QString str;
+//            for (int j = 0; j < height; j+=100) {
+//                short tmp = (array[i + j * width]);
+//                str+= QString::number(tmp) + " ";
+//            }
+//            qDebug() << str;
+//        }
+//        qDebug() << "========================";
 
 
-        for (int i = 0; i < width; i+=100){
-            for (int j = 0; j < height; j+=100) {
+        for (int i = 0; i < width; i++){
+            for (int j = 0; j < height; j++) {
                 frame[i][j] = array[i + j * width];
             }
         }
     return 1;
     }
+}
+
+bool IdsCam::statusCam()
+{
+    return isOK;
+}
+
+bool IdsCam::statusLife()
+{
+    return isLife;
 }
