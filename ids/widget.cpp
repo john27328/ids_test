@@ -68,13 +68,13 @@ void Widget::createColorMap()
     double x, y, z;
     for (int xIndex=0; xIndex<nx; ++xIndex)
     {
-      for (int yIndex=0; yIndex<ny; ++yIndex)
-      {
-        colorMap->data()->cellToCoord(xIndex, yIndex, &x, &y);
-        double r = 3*qSqrt(x*x+y*y)+1e-2;
-        z = 2*x*(qCos(r+2)/r-qSin(r+2)/r); // the B field strength of dipole radiation (modulo physical constants)
-        colorMap->data()->setCell(xIndex, yIndex, z);
-      }
+        for (int yIndex=0; yIndex<ny; ++yIndex)
+        {
+            colorMap->data()->cellToCoord(xIndex, yIndex, &x, &y);
+            double r = 3*qSqrt(x*x+y*y)+1e-2;
+            z = 2*x*(qCos(r+2)/r-qSin(r+2)/r); // the B field strength of dipole radiation (modulo physical constants)
+            colorMap->data()->setCell(xIndex, yIndex, z);
+        }
     }
 
     // add a color scale:
