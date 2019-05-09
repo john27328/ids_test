@@ -3,7 +3,7 @@
 #include <stdlib.h>
 //#include <iostream.h>
 #include <time.h>
-
+#include <chrono>
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
@@ -14,9 +14,16 @@ Widget::Widget(QWidget *parent) :
     life = new Life();
     createColorMap();
     connect(ui->startLifePB, SIGNAL(clicked()), life, SLOT(startLife()));
+    connect(ui->startLifePB, SIGNAL(clicked()), this, SLOT(resetScale()));
+    connect(ui->startLifePB, SIGNAL(clicked()), this, SLOT(resetColor()));
     connect(ui->stopLifePB, SIGNAL(clicked()), life, SLOT(stopLife()));
     connect(ui->initPB, SIGNAL(clicked()), life, SLOT(initCamera()));
     connect(life, SIGNAL(updateFrame(float**)),this, SLOT(plotColorMap(float**)));
+    connect(ui->resetScalePushButton, SIGNAL(clicked()), this, SLOT(resetScale()));
+    connect(ui->resetColorPushButton, SIGNAL(clicked()), this, SLOT(resetColor()));
+    connect(ui->BCGNDcheckBox,SIGNAL(stateChanged(int)), this, SLOT(background(int)));
+    connect(ui->BCGNDpushButton, SIGNAL(clicked()), this, SLOT(saveBackground()));
+    connect(life, SIGNAL(stateSaveBCGR(int)), ui->BCGNDprogressBar, SLOT(setValue(int)));
 
 }
 
@@ -97,6 +104,8 @@ void Widget::createColorMap()
 void Widget::plotColorMap(float **frame)
 {
     //qDebug()<<"PlotFrame";
+
+
     colorMap->data()->clear();
     int nx = life->getWidth();
     int ny = life->getHeight();
@@ -105,33 +114,48 @@ void Widget::plotColorMap(float **frame)
     colorMap->data()->setRange(QCPRange(-4, 4), QCPRange(-4, 4)); // and span the coordinate range -4..4 in both key (x) and value (y) dimensions
     // now we assign some data, by accessing the QCPColorMapData instance of the color map:
     double x, y, z;
-    srand(time(0));
+    //srand(time(0));
+    auto begin = std::chrono::steady_clock::now();
     for(int xIndex=0; xIndex<nx; ++xIndex)
     {
         for(int yIndex=0; yIndex<ny; ++yIndex)
         {
-            colorMap->data()->cellToCoord(xIndex, yIndex, &x, &y);
-            double z = frame[xIndex][yIndex];
+            //colorMap->data()->cellToCoord(xIndex, yIndex, &x, &y);
             //double z = rand()%10+100;
-            colorMap->data()->setCell(xIndex, yIndex, z);
+            colorMap->data()->setCell(xIndex, yIndex, frame[xIndex][yIndex]);
         }
     }
 
-    //отладка
-//    for (int i = 0; i < nx; i+=99){
-//        QString str;
-//        for (int j = 0; j < ny; j+=99) {
-//            //double tmp = (frame[i][j]);
-//            double tmp = colorMap->data()->cell(i,j);
-//            str+= QString::number(tmp) + " ";
-//        }
-//        qDebug() << str;
-//    }
-//    qDebug() << "========================";
+
     RescaleCustomPlot(ui->colorMap); //делаем квадрат
-    //ui->colorMap->rescaleAxes();
-    colorMap->rescaleDataRange();
+    //colorMap->rescaleDataRange();
     ui->colorMap->replot();
+    auto end = std::chrono::steady_clock::now();
+    auto elapsed_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin);
+    //qDebug() << "The time: " << elapsed_ms.count() << " ms\n";
     update();
+}
+
+void Widget::resetScale()
+{
+    ui->colorMap->rescaleAxes();
+}
+
+void Widget::resetColor()
+{
+    double range = pow(2, 12) * ui->RangeColorSpinBox->value() / 100.;
+    colorMap->setDataRange(QCPRange(0,range));
+}
+
+void Widget::background(int state)
+{
+    qDebug() << "clicked вычитать фон" << state;
+    life->setSubtractBackground(state);
+}
+
+void Widget::saveBackground()
+{
+    qDebug() << "clicked соранить фон" << ui->BCGND_SB->value();
+    life->saveBackground(ui->BCGND_SB->value());
 }
 

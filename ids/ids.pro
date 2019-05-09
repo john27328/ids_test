@@ -29,12 +29,15 @@ SOURCES += \
         life.cpp \
         main.cpp \
         qcustomplot.cpp \
+        testcam.cpp \
         widget.cpp
 
 HEADERS += \
+    cam.h \
     idscam.h \
     life.h \
     qcustomplot.h \
+    testcam.h \
         widget.h \
     C:/Program Files/IDS/uEye/Develop/include/uEye.h \
     C:/Program Files/IDS/uEye/Develop/include/uEye.h

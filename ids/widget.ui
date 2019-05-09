@@ -13,54 +13,157 @@
   <property name="windowTitle">
    <string>Widget</string>
   </property>
-  <widget class="QPushButton" name="startLifePB">
+  <widget class="QCustomPlot" name="colorMap" native="true">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>40</y>
-     <width>75</width>
-     <height>23</height>
+     <x>350</x>
+     <y>92</y>
+     <width>351</width>
+     <height>249</height>
     </rect>
    </property>
-   <property name="text">
-    <string>запустить</string>
+   <property name="minimumSize">
+    <size>
+     <width>200</width>
+     <height>200</height>
+    </size>
    </property>
   </widget>
-  <widget class="QPushButton" name="initPB">
+  <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>75</width>
-     <height>23</height>
+     <width>77</width>
+     <height>83</height>
     </rect>
    </property>
-   <property name="text">
-    <string>подключить</string>
-   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QPushButton" name="initPB">
+      <property name="text">
+       <string>подключить</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="startLifePB">
+      <property name="text">
+       <string>запустить</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="stopLifePB">
+      <property name="text">
+       <string>остановить</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
-  <widget class="QPushButton" name="stopLifePB">
+  <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>70</y>
-     <width>75</width>
-     <height>23</height>
+     <y>110</y>
+     <width>139</width>
+     <height>111</height>
     </rect>
    </property>
-   <property name="text">
-    <string>остановить</string>
-   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>число усреднений</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="BCGND_SB">
+        <property name="value">
+         <number>15</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QPushButton" name="BCGNDpushButton">
+      <property name="text">
+       <string>сохранить фон</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QProgressBar" name="BCGNDprogressBar">
+      <property name="value">
+       <number>24</number>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="BCGNDcheckBox">
+      <property name="text">
+       <string>вычитать фон</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
-  <widget class="QCustomPlot" name="colorMap" native="true">
+  <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>230</x>
-     <y>80</y>
-     <width>651</width>
-     <height>351</height>
+     <x>351</x>
+     <y>60</y>
+     <width>376</width>
+     <height>25</height>
     </rect>
    </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <item>
+     <widget class="QPushButton" name="resetScalePushButton">
+      <property name="text">
+       <string>сбросить масштаб</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="resetColorPushButton">
+      <property name="text">
+       <string>сбросить цветовую шкалу</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>использовать</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QSpinBox" name="RangeColorSpinBox">
+      <property name="minimum">
+       <number>1</number>
+      </property>
+      <property name="maximum">
+       <number>100</number>
+      </property>
+      <property name="singleStep">
+       <number>10</number>
+      </property>
+      <property name="value">
+       <number>100</number>
+      </property>
+      <property name="displayIntegerBase">
+       <number>10</number>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

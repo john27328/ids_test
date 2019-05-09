@@ -26,6 +26,10 @@ private:
 public slots:
     void createColorMap();
     void plotColorMap(float **frame);
+    void resetScale();
+    void resetColor();
+    void background(int state);
+    void saveBackground();
 
 
 };

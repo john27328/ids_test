@@ -2,9 +2,8 @@
 #define IDSCAM_H
 
 #include "ueye.h"
-#include <QDebug>
-#define DBG(x) #x << (x)
-class IdsCam
+#include "cam.h"
+class IdsCam: public Cam
 {
 public:
     static int initCum(IdsCam** cam);
@@ -20,6 +19,7 @@ public:
     int getWidth() const;
 
     int getHeight() const;
+
 
 private:
     IdsCam();

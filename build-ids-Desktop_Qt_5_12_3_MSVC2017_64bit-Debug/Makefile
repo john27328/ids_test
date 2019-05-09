@@ -116,10 +116,14 @@ Makefile: ..\ids\ids.pro C:\Qt1\5.12.3\msvc2017_64\mkspecs\win32-msvc\qmake.conf
 		C:\Qt1\5.12.3\msvc2017_64\mkspecs\modules\qt_lib_bluetooth.pri \
 		C:\Qt1\5.12.3\msvc2017_64\mkspecs\modules\qt_lib_bluetooth_private.pri \
 		C:\Qt1\5.12.3\msvc2017_64\mkspecs\modules\qt_lib_bootstrap_private.pri \
+		C:\Qt1\5.12.3\msvc2017_64\mkspecs\modules\qt_lib_charts.pri \
+		C:\Qt1\5.12.3\msvc2017_64\mkspecs\modules\qt_lib_charts_private.pri \
 		C:\Qt1\5.12.3\msvc2017_64\mkspecs\modules\qt_lib_concurrent.pri \
 		C:\Qt1\5.12.3\msvc2017_64\mkspecs\modules\qt_lib_concurrent_private.pri \
 		C:\Qt1\5.12.3\msvc2017_64\mkspecs\modules\qt_lib_core.pri \
 		C:\Qt1\5.12.3\msvc2017_64\mkspecs\modules\qt_lib_core_private.pri \
+		C:\Qt1\5.12.3\msvc2017_64\mkspecs\modules\qt_lib_datavisualization.pri \
+		C:\Qt1\5.12.3\msvc2017_64\mkspecs\modules\qt_lib_datavisualization_private.pri \
 		C:\Qt1\5.12.3\msvc2017_64\mkspecs\modules\qt_lib_dbus.pri \
 		C:\Qt1\5.12.3\msvc2017_64\mkspecs\modules\qt_lib_dbus_private.pri \
 		C:\Qt1\5.12.3\msvc2017_64\mkspecs\modules\qt_lib_designer.pri \
@@ -246,6 +250,7 @@ Makefile: ..\ids\ids.pro C:\Qt1\5.12.3\msvc2017_64\mkspecs\win32-msvc\qmake.conf
 		C:\Qt1\5.12.3\msvc2017_64\mkspecs\features\yacc.prf \
 		C:\Qt1\5.12.3\msvc2017_64\mkspecs\features\lex.prf \
 		..\ids\ids.pro \
+		C:\Qt1\5.12.3\msvc2017_64\lib\Qt5PrintSupport.prl \
 		C:\Qt1\5.12.3\msvc2017_64\lib\Qt5Widgets.prl \
 		C:\Qt1\5.12.3\msvc2017_64\lib\Qt5Gui.prl \
 		C:\Qt1\5.12.3\msvc2017_64\lib\Qt5Core.prl \
@@ -290,10 +295,14 @@ C:\Qt1\5.12.3\msvc2017_64\mkspecs\modules\qt_lib_axserver_private.pri:
 C:\Qt1\5.12.3\msvc2017_64\mkspecs\modules\qt_lib_bluetooth.pri:
 C:\Qt1\5.12.3\msvc2017_64\mkspecs\modules\qt_lib_bluetooth_private.pri:
 C:\Qt1\5.12.3\msvc2017_64\mkspecs\modules\qt_lib_bootstrap_private.pri:
+C:\Qt1\5.12.3\msvc2017_64\mkspecs\modules\qt_lib_charts.pri:
+C:\Qt1\5.12.3\msvc2017_64\mkspecs\modules\qt_lib_charts_private.pri:
 C:\Qt1\5.12.3\msvc2017_64\mkspecs\modules\qt_lib_concurrent.pri:
 C:\Qt1\5.12.3\msvc2017_64\mkspecs\modules\qt_lib_concurrent_private.pri:
 C:\Qt1\5.12.3\msvc2017_64\mkspecs\modules\qt_lib_core.pri:
 C:\Qt1\5.12.3\msvc2017_64\mkspecs\modules\qt_lib_core_private.pri:
+C:\Qt1\5.12.3\msvc2017_64\mkspecs\modules\qt_lib_datavisualization.pri:
+C:\Qt1\5.12.3\msvc2017_64\mkspecs\modules\qt_lib_datavisualization_private.pri:
 C:\Qt1\5.12.3\msvc2017_64\mkspecs\modules\qt_lib_dbus.pri:
 C:\Qt1\5.12.3\msvc2017_64\mkspecs\modules\qt_lib_dbus_private.pri:
 C:\Qt1\5.12.3\msvc2017_64\mkspecs\modules\qt_lib_designer.pri:
@@ -420,6 +429,7 @@ C:\Qt1\5.12.3\msvc2017_64\mkspecs\features\exceptions.prf:
 C:\Qt1\5.12.3\msvc2017_64\mkspecs\features\yacc.prf:
 C:\Qt1\5.12.3\msvc2017_64\mkspecs\features\lex.prf:
 ..\ids\ids.pro:
+C:\Qt1\5.12.3\msvc2017_64\lib\Qt5PrintSupport.prl:
 C:\Qt1\5.12.3\msvc2017_64\lib\Qt5Widgets.prl:
 C:\Qt1\5.12.3\msvc2017_64\lib\Qt5Gui.prl:
 C:\Qt1\5.12.3\msvc2017_64\lib\Qt5Core.prl:
