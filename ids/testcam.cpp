@@ -6,6 +6,7 @@
 TestCam::TestCam()
 {
     width = height = 2000;
+    pSize_mkm = 5.5;
     qDebug()<<"testCam создан";
     fpsCam = 2;
 }
@@ -72,7 +73,7 @@ int TestCam::getFrame(float **frame)
     Sleep(100);
     double x;
     double y;
-    double a = 3000;
+    double a = 100;
     double x0;
     double y0 = 1000;
     double sigmaX = 20;
@@ -83,7 +84,7 @@ int TestCam::getFrame(float **frame)
             x = i; y = j; x0 = k;
             z = a * exp(-(pow((x - x0),2) / 2 / pow(sigmaX,2) +
                           pow((y - y0),2) / 2 /pow(sigmaY,2)));
-            frame[i][j] = rand()%100 + 500 + z;
+            frame[i][j] = rand()%100 + 100 + z;
         }
     }
       auto end = std::chrono::steady_clock::now();
@@ -102,13 +103,3 @@ bool TestCam::statusLife()
     return 1;
 }
 
-int TestCam::getWidth() const
-{
-    return width;
-
-}
-
-int TestCam::getHeight() const
-{
-    return height;
-}

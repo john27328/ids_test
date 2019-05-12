@@ -18,13 +18,14 @@ Widget::Widget(QWidget *parent) :
     connect(ui->startLifePB, SIGNAL(clicked()), this, SLOT(resetColor()));
     connect(ui->stopLifePB, SIGNAL(clicked()), life, SLOT(stopLife()));
     connect(ui->initPB, SIGNAL(clicked()), life, SLOT(initCamera()));
-    connect(life, SIGNAL(updateFrame(float**)),this, SLOT(plotColorMap(float**)));
+    connect(life, SIGNAL(updateFrame()),this, SLOT(plotColorMap()));
+    connect(life, SIGNAL(updateFrame()),this, SLOT(plotSections()));
     connect(ui->resetScalePushButton, SIGNAL(clicked()), this, SLOT(resetScale()));
     connect(ui->resetColorPushButton, SIGNAL(clicked()), this, SLOT(resetColor()));
     connect(ui->BCGNDcheckBox,SIGNAL(stateChanged(int)), this, SLOT(background(int)));
     connect(ui->BCGNDpushButton, SIGNAL(clicked()), this, SLOT(saveBackground()));
     connect(life, SIGNAL(stateSaveBCGR(int)), ui->BCGNDprogressBar, SLOT(setValue(int)));
-
+    connect(life, SIGNAL(lifeStartOk()),this, SLOT(createSections()));
 }
 
 Widget::~Widget()
@@ -101,7 +102,50 @@ void Widget::createColorMap()
     customPlot->rescaleAxes();
 }
 
-void Widget::plotColorMap(float **frame)
+void Widget::createSections()
+{
+    ui->sectionX->addGraph();
+    // give the axes some labels:
+    ui->sectionX->xAxis->setLabel("x, мм");
+    ui->sectionX->yAxis->setLabel("сечение x");
+    // set axes ranges, so we see all data:
+    ui->sectionX->xAxis->setRange(0, life->getWidth_mm());
+    ui->sectionX->yAxis->rescale();
+    ui->sectionX->setInteraction(QCP::iRangeZoom,true);   // Включаем взаимодействие удаления/приближения
+    ui->sectionX->setInteraction(QCP::iRangeDrag, true);  // Включаем взаимодействие перетаскивания графика
+    ui->sectionX->axisRect()->setRangeDrag(Qt::Horizontal);   // Включаем перетаскивание только по горизонтальной оси
+    ui->sectionX->axisRect()->setRangeZoom(Qt::Horizontal);   // Включаем удаление/приближение только по горизонтальной оси
+    ui->sectionX->replot();
+
+    ui->sectionY->addGraph();
+    // give the axes some labels:
+    ui->sectionY->xAxis->setLabel("y, мм");
+    ui->sectionY->yAxis->setLabel("сечение y");
+    // set axes ranges, so we see all data:
+    ui->sectionY->xAxis->setRange(0, life->getWidth_mm());
+    ui->sectionY->yAxis->rescale();
+    ui->sectionY->setInteraction(QCP::iRangeZoom,true);   // Включаем взаимодействие удаления/приближения
+    ui->sectionY->setInteraction(QCP::iRangeDrag, true);  // Включаем взаимодействие перетаскивания графика
+    ui->sectionY->axisRect()->setRangeDrag(Qt::Horizontal);   // Включаем перетаскивание только по горизонтальной оси
+    ui->sectionY->axisRect()->setRangeZoom(Qt::Horizontal);   // Включаем удаление/приближение только по горизонтальной оси
+    ui->sectionY->replot();
+}
+
+void Widget::plotSections()
+{
+    ui->sectionX->graph(0)->setData(*life->pAxisX, *life->pSectionX);
+    qDebug() << (*life->pAxisX)[2000];
+    ui->sectionX->yAxis->rescale();
+    ui->sectionX->replot();
+
+    ui->sectionY->graph(0)->setData(*life->pAxisY, *life->pSectionY);
+    ui->sectionY->yAxis->rescale();
+    ui->sectionY->replot();
+
+}
+
+
+void Widget::plotColorMap()
 {
     //qDebug()<<"PlotFrame";
 
@@ -122,7 +166,7 @@ void Widget::plotColorMap(float **frame)
         {
             //colorMap->data()->cellToCoord(xIndex, yIndex, &x, &y);
             //double z = rand()%10+100;
-            colorMap->data()->setCell(xIndex, yIndex, frame[xIndex][yIndex]);
+            colorMap->data()->setCell(xIndex, yIndex, life->ppFrame[xIndex][yIndex]);
         }
     }
 
@@ -139,12 +183,15 @@ void Widget::plotColorMap(float **frame)
 void Widget::resetScale()
 {
     ui->colorMap->rescaleAxes();
+    ui->colorMap->replot();
 }
 
 void Widget::resetColor()
 {
     double range = pow(2, 12) * ui->RangeColorSpinBox->value() / 100.;
     colorMap->setDataRange(QCPRange(0,range));
+    ui->colorMap->replot();
+
 }
 
 void Widget::background(int state)
@@ -158,4 +205,5 @@ void Widget::saveBackground()
     qDebug() << "clicked соранить фон" << ui->BCGND_SB->value();
     life->saveBackground(ui->BCGND_SB->value());
 }
+
 

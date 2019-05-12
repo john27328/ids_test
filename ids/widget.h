@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "life.h"
 #include "qcustomplot.h"
+#include <QVector>
 
 namespace Ui {
 class Widget;
@@ -25,11 +26,13 @@ private:
 
 public slots:
     void createColorMap();
-    void plotColorMap(float **frame);
+    void createSections();
+    void plotColorMap();
     void resetScale();
     void resetColor();
     void background(int state);
     void saveBackground();
+    void plotSections();
 
 
 };

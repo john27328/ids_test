@@ -21,6 +21,9 @@ IdsCam::IdsCam()
     }
     else {
         qDebug() << "Модель сенсора: " << sInfo.strSensorName;
+        pSize_mkm = sInfo.wPixelSize / 100.;
+        qDebug() << "Размер пикселя: " << pSize_mkm;
+
     }
 
     nRet = is_GetCameraInfo(hCam,&cInfo); // информация о камере
@@ -29,8 +32,8 @@ IdsCam::IdsCam()
     }
     else {
         qDebug() << "Серийный номер: " << cInfo.SerNo;
-    }
 
+    }
 
 
     nRet = is_ResetToDefault(hCam); // сброс настроек на стандартные
@@ -77,18 +80,8 @@ IdsCam::IdsCam()
 
 }
 
-int IdsCam::getHeight() const
-{
-    return height;
-}
 
-int IdsCam::getWidth() const
-{
-    return width;
-}
-
-
-int IdsCam::initCum(IdsCam **cam)
+int IdsCam::initCum(Cam **cam)
 {
     qDebug() << DBG(*cam);
     if(!(*cam)){

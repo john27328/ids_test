@@ -19,16 +19,30 @@ public:
     virtual bool statusCam() = 0; // - 1 - ok
     virtual bool statusLife() = 0; // - 1 - ok
 
-    virtual int getWidth() const = 0;
 
-    virtual int getHeight() const = 0;
     Cam **thisCam;
 
-private:
+    int getWidth() const
+    {
+        return width;
+    }
+    int getHeight() const
+    {
+        return height;
+    }
+
+    double getPSize_mkm() const
+    {
+        return pSize_mkm;
+    }
+protected:
     int width;
     int height;
     bool isOK;
     bool isLife;
+    double pSize_mkm;
 };
+
+
 
 #endif // CAM_H

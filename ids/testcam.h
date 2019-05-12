@@ -15,13 +15,9 @@ public:
     int getFrame(float **frame);
     bool statusCam(); // - 1 - ok
     bool statusLife(); // - 1 - ok
-    int getWidth() const;
-    int getHeight() const;
 private:
     TestCam **thisCam;
     TestCam();
-    int width;
-    int height;
     int fpsCam;
 
 };

@@ -6,7 +6,7 @@
 class IdsCam: public Cam
 {
 public:
-    static int initCum(IdsCam** cam);
+    static int initCum(Cam** cam);
     ~IdsCam();
     int setFPS(double &fps);
     int getRangeFPS(double &minFPS, double &maxFPS);
@@ -16,11 +16,6 @@ public:
     bool statusCam(); // - 1 - ok
     bool statusLife(); // - 1 - ok
 
-    int getWidth() const;
-
-    int getHeight() const;
-
-
 private:
     IdsCam();
     IdsCam **thisCam;
@@ -29,14 +24,11 @@ private:
     CAMINFO cInfo;
     HWND hWndDisplay;
     IS_RECT rectAOI;
-    int width;
-    int height;
     char* ppcImgMem; // кадр
     int memID;
     int pitch;
     HANDLE hEvent;
-    bool isOK;
-    bool isLife;
+
 };
 
 #endif // IDSCAM_H
