@@ -134,7 +134,6 @@ void Widget::createSections()
 void Widget::plotSections()
 {
     ui->sectionX->graph(0)->setData(*life->pAxisX, *life->pSectionX);
-    qDebug() << (*life->pAxisX)[2000];
     ui->sectionX->yAxis->rescale();
     ui->sectionX->replot();
 

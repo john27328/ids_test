@@ -112,3 +112,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+build-ids-Desktop_Qt_5_12_3_MSVC2017_64bit-Debug/debug/moc_life.cpp

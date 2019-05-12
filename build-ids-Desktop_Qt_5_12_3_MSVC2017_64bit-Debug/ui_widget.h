@@ -17,6 +17,7 @@
 #include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpinBox>
+#include <QtWidgets/QSplitter>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 #include "qcustomplot.h"
@@ -26,13 +27,12 @@ QT_BEGIN_NAMESPACE
 class Ui_Widget
 {
 public:
-    QCustomPlot *colorMap;
-    QWidget *widget;
+    QWidget *layoutWidget;
     QVBoxLayout *verticalLayout;
     QPushButton *initPB;
     QPushButton *startLifePB;
     QPushButton *stopLifePB;
-    QWidget *widget1;
+    QWidget *layoutWidget1;
     QVBoxLayout *verticalLayout_2;
     QHBoxLayout *horizontalLayout;
     QLabel *label;
@@ -40,49 +40,52 @@ public:
     QPushButton *BCGNDpushButton;
     QProgressBar *BCGNDprogressBar;
     QCheckBox *BCGNDcheckBox;
-    QWidget *widget2;
+    QSplitter *splitter;
+    QWidget *widget;
+    QVBoxLayout *verticalLayout_3;
+    QCustomPlot *sectionX;
+    QCustomPlot *sectionY;
+    QWidget *widget1;
+    QVBoxLayout *verticalLayout_4;
     QHBoxLayout *horizontalLayout_2;
     QPushButton *resetScalePushButton;
     QPushButton *resetColorPushButton;
     QLabel *label_2;
     QSpinBox *RangeColorSpinBox;
+    QCustomPlot *colorMap;
 
     void setupUi(QWidget *Widget)
     {
         if (Widget->objectName().isEmpty())
             Widget->setObjectName(QString::fromUtf8("Widget"));
         Widget->resize(998, 530);
-        colorMap = new QCustomPlot(Widget);
-        colorMap->setObjectName(QString::fromUtf8("colorMap"));
-        colorMap->setGeometry(QRect(350, 92, 351, 249));
-        colorMap->setMinimumSize(QSize(200, 200));
-        widget = new QWidget(Widget);
-        widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(10, 10, 77, 83));
-        verticalLayout = new QVBoxLayout(widget);
+        layoutWidget = new QWidget(Widget);
+        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
+        layoutWidget->setGeometry(QRect(10, 10, 77, 83));
+        verticalLayout = new QVBoxLayout(layoutWidget);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
-        initPB = new QPushButton(widget);
+        initPB = new QPushButton(layoutWidget);
         initPB->setObjectName(QString::fromUtf8("initPB"));
 
         verticalLayout->addWidget(initPB);
 
-        startLifePB = new QPushButton(widget);
+        startLifePB = new QPushButton(layoutWidget);
         startLifePB->setObjectName(QString::fromUtf8("startLifePB"));
 
         verticalLayout->addWidget(startLifePB);
 
-        stopLifePB = new QPushButton(widget);
+        stopLifePB = new QPushButton(layoutWidget);
         stopLifePB->setObjectName(QString::fromUtf8("stopLifePB"));
 
         verticalLayout->addWidget(stopLifePB);
 
-        widget1 = new QWidget(Widget);
-        widget1->setObjectName(QString::fromUtf8("widget1"));
-        widget1->setGeometry(QRect(10, 110, 139, 111));
-        verticalLayout_2 = new QVBoxLayout(widget1);
+        layoutWidget1 = new QWidget(Widget);
+        layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
+        layoutWidget1->setGeometry(QRect(10, 110, 139, 111));
+        verticalLayout_2 = new QVBoxLayout(layoutWidget1);
         verticalLayout_2->setSpacing(6);
         verticalLayout_2->setContentsMargins(11, 11, 11, 11);
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
@@ -90,12 +93,12 @@ public:
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(6);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        label = new QLabel(widget1);
+        label = new QLabel(layoutWidget1);
         label->setObjectName(QString::fromUtf8("label"));
 
         horizontalLayout->addWidget(label);
 
-        BCGND_SB = new QSpinBox(widget1);
+        BCGND_SB = new QSpinBox(layoutWidget1);
         BCGND_SB->setObjectName(QString::fromUtf8("BCGND_SB"));
         BCGND_SB->setValue(15);
 
@@ -104,46 +107,72 @@ public:
 
         verticalLayout_2->addLayout(horizontalLayout);
 
-        BCGNDpushButton = new QPushButton(widget1);
+        BCGNDpushButton = new QPushButton(layoutWidget1);
         BCGNDpushButton->setObjectName(QString::fromUtf8("BCGNDpushButton"));
 
         verticalLayout_2->addWidget(BCGNDpushButton);
 
-        BCGNDprogressBar = new QProgressBar(widget1);
+        BCGNDprogressBar = new QProgressBar(layoutWidget1);
         BCGNDprogressBar->setObjectName(QString::fromUtf8("BCGNDprogressBar"));
         BCGNDprogressBar->setValue(24);
 
         verticalLayout_2->addWidget(BCGNDprogressBar);
 
-        BCGNDcheckBox = new QCheckBox(widget1);
+        BCGNDcheckBox = new QCheckBox(layoutWidget1);
         BCGNDcheckBox->setObjectName(QString::fromUtf8("BCGNDcheckBox"));
 
         verticalLayout_2->addWidget(BCGNDcheckBox);
 
-        widget2 = new QWidget(Widget);
-        widget2->setObjectName(QString::fromUtf8("widget2"));
-        widget2->setGeometry(QRect(351, 60, 376, 25));
-        horizontalLayout_2 = new QHBoxLayout(widget2);
+        splitter = new QSplitter(Widget);
+        splitter->setObjectName(QString::fromUtf8("splitter"));
+        splitter->setGeometry(QRect(180, 20, 801, 481));
+        splitter->setOrientation(Qt::Horizontal);
+        widget = new QWidget(splitter);
+        widget->setObjectName(QString::fromUtf8("widget"));
+        verticalLayout_3 = new QVBoxLayout(widget);
+        verticalLayout_3->setSpacing(6);
+        verticalLayout_3->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
+        verticalLayout_3->setContentsMargins(0, 0, 0, 0);
+        sectionX = new QCustomPlot(widget);
+        sectionX->setObjectName(QString::fromUtf8("sectionX"));
+        sectionX->setMinimumSize(QSize(200, 100));
+
+        verticalLayout_3->addWidget(sectionX);
+
+        sectionY = new QCustomPlot(widget);
+        sectionY->setObjectName(QString::fromUtf8("sectionY"));
+        sectionY->setMinimumSize(QSize(200, 100));
+
+        verticalLayout_3->addWidget(sectionY);
+
+        splitter->addWidget(widget);
+        widget1 = new QWidget(splitter);
+        widget1->setObjectName(QString::fromUtf8("widget1"));
+        verticalLayout_4 = new QVBoxLayout(widget1);
+        verticalLayout_4->setSpacing(6);
+        verticalLayout_4->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
+        verticalLayout_4->setContentsMargins(0, 0, 0, 0);
+        horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setSpacing(6);
-        horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
-        horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
-        resetScalePushButton = new QPushButton(widget2);
+        resetScalePushButton = new QPushButton(widget1);
         resetScalePushButton->setObjectName(QString::fromUtf8("resetScalePushButton"));
 
         horizontalLayout_2->addWidget(resetScalePushButton);
 
-        resetColorPushButton = new QPushButton(widget2);
+        resetColorPushButton = new QPushButton(widget1);
         resetColorPushButton->setObjectName(QString::fromUtf8("resetColorPushButton"));
 
         horizontalLayout_2->addWidget(resetColorPushButton);
 
-        label_2 = new QLabel(widget2);
+        label_2 = new QLabel(widget1);
         label_2->setObjectName(QString::fromUtf8("label_2"));
 
         horizontalLayout_2->addWidget(label_2);
 
-        RangeColorSpinBox = new QSpinBox(widget2);
+        RangeColorSpinBox = new QSpinBox(widget1);
         RangeColorSpinBox->setObjectName(QString::fromUtf8("RangeColorSpinBox"));
         RangeColorSpinBox->setMinimum(1);
         RangeColorSpinBox->setMaximum(100);
@@ -153,6 +182,17 @@ public:
 
         horizontalLayout_2->addWidget(RangeColorSpinBox);
 
+
+        verticalLayout_4->addLayout(horizontalLayout_2);
+
+        colorMap = new QCustomPlot(widget1);
+        colorMap->setObjectName(QString::fromUtf8("colorMap"));
+        colorMap->setMinimumSize(QSize(200, 200));
+
+        verticalLayout_4->addWidget(colorMap);
+
+        verticalLayout_4->setStretch(1, 1);
+        splitter->addWidget(widget1);
 
         retranslateUi(Widget);
 
